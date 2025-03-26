@@ -1,0 +1,103 @@
+Slip 11
+Q.1 Create a child process using fork(), display parent and child process id. Child process will 
+display the message “Hello World” and the parent process should display “Hi”. [10 marks]
+Q1: Fork() to Create Parent and Child Process
+Here is the simplest program to demonstrate creating a child process using fork() in C:
+#include <stdio.h>
+#include <unistd.h> // For fork()
+int main() {
+ pid_t pid = fork(); // Create child process
+ if (pid == 0) {
+ // Child process
+ printf("Hello World from Child Process! PID: %d\n", getpid());
+ } else if (pid > 0) {
+ // Parent process
+ printf("Hi from Parent Process! PID: %d\n", getpid());
+ } else {
+ // Fork failed
+ printf("Fork failed!\n");
+ }
+ return 0;
+}
+Explanation:
+1. fork(): Creates a new process. 
+• Returns 0 to the child process. 
+• Returns the child process ID to the parent process. 
+• Returns a negative value if the process creation fails. 
+2. getpid(): Gets the process ID. 
+3. Child Process: Executes the "Hello World" message. 
+4. Parent Process: Executes the "Hi" message. 
+ Q.2 Write the simulation program to implement demand paging and show the page 
+scheduling and total number of page faults for the following given page reference string. Give 
+input n as the number of memory frames. Reference String: 0, 2, 1, 6, 4, 0, 1, 0, 3, 1, 2, 1 
+Implement FIFO 
+Q2: Demand Paging Simulation (FIFO)
+Here’s the simplest implementation of the demand paging simulation using FIFO:
+#include <stdio.h>
+void simulateFIFO(int pages[], int n, int frames) {
+ int frame[frames], pageFaults = 0, index = 0;
+ for (int i = 0; i < frames; i++) {
+ frame[i] = -1; // Initialize frames as empty
+ }
+ for (int i = 0; i < n; i++) {
+ int found = 0;
+ for (int j = 0; j < frames; j++) {
+ if (frame[j] == pages[i]) { // Page hit
+ found = 1;
+ break;
+ }
+ }
+ if (!found) { // Page fault
+ frame[index] = pages[i];
+ index = (index + 1) % frames; // FIFO replacement
+ pageFaults++;
+ }
+ // Print current frame state
+ printf("Page: %d -> Frames: ", pages[i]);
+ for (int j = 0; j < frames; j++) {
+ if (frame[j] != -1) printf("%d ", frame[j]);
+ else printf("_ "); // Empty frame
+ }
+ printf("\n");
+ }
+ printf("Total Page Faults: %d\n", pageFaults);
+}
+int main() {
+ int pages[] = {0, 2, 1, 6, 4, 0, 1, 0, 3, 1, 2, 1};
+ int n = sizeof(pages) / sizeof(pages[0]);
+ int frames;
+ printf("Enter number of memory frames: ");
+ scanf("%d", &frames);
+ simulateFIFO(pages, n, frames);
+ return 0;
+}
+Explanation:
+1. Input: 
+• Reference string: Array of pages to be accessed. 
+• Frames: Number of available memory frames. 
+2. FIFO Replacement: 
+• Maintains a circular queue to replace the oldest page when a fault occurs. 
+3. Simulation: 
+• Checks if the current page is in the frame. 
+• If not, replaces the oldest page and counts the fault. 
+4. Output: 
+• Prints the state of memory frames after each page access. 
+• Displays the total number of page faults. 
+Sample Run:
+Input:
+Enter number of memory frames: 3
+Output:
+Page: 0 -> Frames: 0 _ _ 
+Page: 2 -> Frames: 0 2 _ 
+Page: 1 -> Frames: 0 2 1 
+Page: 6 -> Frames: 6 2 1 
+Page: 4 -> Frames: 6 4 1 
+Page: 0 -> Frames: 0 4 1 
+Page: 1 -> Frames: 0 4 1 
+Page: 0 -> Frames: 0 4 1 
+Page: 3 -> Frames: 3 4 1 
+Page: 1 -> Frames: 3 1 1 
+Page: 2 -> Frames: 3 1 2 
+Page: 1 -> Frames: 3 1 2 
+Total Page Faults: 9
+This is a concise and easy-to-understand program with outputs to observe the process

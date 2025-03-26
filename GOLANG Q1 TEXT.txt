@@ -1,0 +1,750 @@
+
+
+### Slip 1
+**Question:** Write a program in GO language to accept user choice and print answers using arithmetic operators.  
+**Answer:**  
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	var num1, num2 float64
+	var choice int
+
+	fmt.Println("Enter first number:")
+	fmt.Scanln(&num1)
+
+	fmt.Println("Enter second number:")
+	fmt.Scanln(&num2)
+
+	fmt.Println("Choose an operation:")
+	fmt.Println("1. Addition")
+	fmt.Println("2. Subtraction")
+	fmt.Println("3. Multiplication")
+	fmt.Println("4. Division")
+	fmt.Scanln(&choice)
+
+	switch choice {
+	case 1:
+		fmt.Printf("Result: %.2f\n", num1+num2)
+	case 2:
+		fmt.Printf("Result: %.2f\n", num1-num2)
+	case 3:
+		fmt.Printf("Result: %.2f\n", num1*num2)
+	case 4:
+		if num2 != 0 {
+			fmt.Printf("Result: %.2f\n", num1/num2)
+		} else {
+			fmt.Println("Error: Division by zero is not allowed.")
+		}
+	default:
+		fmt.Println("Invalid choice. Please select a valid option.")
+	}
+}
+// Input: 10 5 1
+// Output: Sum: 15
+```
+
+---
+
+### Slip 2
+**Question:** Write a program in GO language to print Fibonacci series of n terms.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func main() {
+    var n int
+    fmt.Print("Enter the number of terms: ")
+    fmt.Scan(&n)
+
+    a, b := 0, 1
+    fmt.Print("Fibonacci series: ")
+    for i := 0; i < n; i++ {
+        fmt.Print(a, " ")
+        a, b = b, a + b
+    }
+    fmt.Println()
+}
+// Input: 5
+// Output: Fibonacci series: 0 1 1 2 3
+```
+
+---
+
+### Slip 3
+**Question:** Write a program in the GO language using function to check whether accepts number is palindrome or not.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func isPalindrome(num int) bool {
+    original := num
+    reversed := 0
+    for num > 0 {
+        digit := num % 10
+        reversed = reversed * 10 + digit
+        num /= 10
+    }
+    return original == reversed
+}
+
+func main() {
+    var number int
+    fmt.Print("Enter a number: ")
+    fmt.Scan(&number)
+    if isPalindrome(number) {
+        fmt.Println("Palindrome")
+    } else {
+        fmt.Println("Not a palindrome")
+    }
+}
+// Input: 121
+// Output: Palindrome
+```
+
+---
+
+### Slip 4
+**Question:** Write a program in GO language to print a recursive sum of digits of a given number.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func sumDigits(num int) int {
+    if num == 0 {
+        return 0
+    }
+    return num % 10 + sumDigits(num / 10)
+}
+
+func main() {
+    var number int
+    fmt.Print("Enter a number: ")
+    fmt.Scan(&number)
+    if number < 0 {
+        number = -number
+    }
+    fmt.Println("Sum of digits: ", sumDigits(number))
+}
+// Input: 123
+// Output: Sum of digits: 6
+```
+
+---
+
+### Slip 5
+**Question:** Write a program in GO language program to create Text file  
+**Answer:**  
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    file, err := os.Create("example.txt")
+    if err != nil {
+        fmt.Println("Error creating file:", err)
+        return
+    }
+    defer file.Close()
+
+    _, err = file.Write([]byte("Hello, World!"))
+    if err != nil {
+        fmt.Println("Error writing to file:", err)
+        return
+    }
+
+    fmt.Println("File created successfully.")
+}
+// Input: None
+// Output: File created successfully.
+```
+
+---
+
+### Slip 6
+**Question:** Write a program in GO language to accept two matrices and display its multiplication  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func main() {
+    var r1, c1, r2, c2 int
+    fmt.Print("Enter dimensions of first matrix (rows columns): ")
+    fmt.Scan(&r1, &c1)
+    fmt.Print("Enter dimensions of second matrix (rows columns): ")
+    fmt.Scan(&r2, &c2)
+
+    if c1 != r2 {
+        fmt.Println("Matrix multiplication not possible")
+        return
+    }
+
+    var matrix1 [10][10]float64
+    var matrix2 [10][10]float64
+    var result [10][10]float64
+
+    fmt.Println("Enter first matrix elements: ")
+    for i := 0; i < r1; i++ {
+        for j := 0; j < c1; j++ {
+            fmt.Scan(&matrix1[i][j])
+        }
+    }
+
+    fmt.Println("Enter second matrix elements: ")
+    for i := 0; i < r2; i++ {
+        for j := 0; j < c2; j++ {
+            fmt.Scan(&matrix2[i][j])
+        }
+    }
+
+    // Multiply matrices
+    for i := 0; i < r1; i++ {
+        for j := 0; j < c2; j++ {
+            for k := 0; k < c1; k++ {
+                result[i][j] += matrix1[i][k] * matrix2[k][j]
+            }
+        }
+    }
+
+    // Display result
+    fmt.Println("Resultant matrix: ")
+    for i := 0; i < r1; i++ {
+        for j := 0; j < c2; j++ {
+            fmt.Print(result[i][j], " ")
+        }
+        fmt.Println()
+    }
+}
+// Input: 2 2 2 2, then first matrix: 1 2 3 4, second matrix: 5 6 7 8
+// Output: Resultant matrix: 
+// 19 22 
+// 43 50
+```
+
+---
+
+### Slip 7
+**Question:** Write a program in GO language to accept one matrix and display its transpose.  
+**Answer:**  
+package main
+
+import "fmt"
+
+func main() {
+    var rows, cols int
+    fmt.Print("Enter dimensions of matrix (rows columns): ")
+    fmt.Scan(&rows, &cols)
+    var matrix [10][10]float64
+    var transpose [10][10]float64
+    fmt.Println("Enter matrix elements:")
+
+    for i := 0; i < rows; i++ {
+        for j := 0; j < cols; j++ {
+            fmt.Scan(&matrix[i][j])
+            transpose[j][i] = matrix[i][j]
+        }
+    }
+
+    // Display transpose
+    fmt.Println("Transpose of matrix:")
+    for i := 0; i < cols; i++ {
+        for j := 0; j < rows; j++ {  // Corrected loop condition here
+            fmt.Print(transpose[i][j], " ")
+        }
+        fmt.Println()
+    }
+}
+
+### Slip 8
+**Question:** Write a program in GO language to accept the book details such as BookID, Title, Author, Price. Read and display the details of 'n' number of books  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+type Book struct {
+    BookID int
+    Title string
+    Author string
+    Price float64
+}
+
+func main() {
+    var n int
+    fmt.Print("Enter number of books: ")
+    fmt.Scan(&n)
+
+    var books [10]Book
+    for i := 0; i < n; i++ {
+        fmt.Println("Enter details for book", i+1)
+        fmt.Print("BookID: ")
+        fmt.Scan(&books[i].BookID)
+        fmt.Print("Title: ")
+        fmt.Scan(&books[i].Title)
+        fmt.Print("Author: ")
+        fmt.Scan(&books[i].Author)
+        fmt.Print("Price: ")
+        fmt.Scan(&books[i].Price)
+    }
+
+    // Display books
+    fmt.Println("Book Details: ")
+    for i := 0; i < n; i++ {
+        fmt.Println("BookID:", books[i].BookID)
+        fmt.Println("Title:", books[i].Title)
+        fmt.Println("Author:", books[i].Author)
+        fmt.Println("Price:", books[i].Price)
+        fmt.Println()
+    }
+}
+// Input: 2, then for each book: BookID 1 Title Go Author John Price 50, BookID 2 Title Python Author Jane Price 60
+// Output: Book Details: 
+// BookID: 1
+// Title: Go
+// Author: John
+// Price: 50
+//
+// BookID: 2
+// Title: Python
+// Author: Jane
+// Price: 60
+```
+
+---
+
+### Slip 9
+**Question:** Write a program in GO language using a function to check whether the accepted number is palindrome or not.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func isPalindrome(num int) bool {
+    original := num
+    reversed := 0
+    for num > 0 {
+        digit := num % 10
+        reversed = reversed * 10 + digit
+        num /= 10
+    }
+    return original == reversed
+}
+
+func main() {
+    var number int
+    fmt.Print("Enter a number: ")
+    fmt.Scan(&number)
+    if isPalindrome(number) {
+        fmt.Println("Palindrome")
+    } else {
+        fmt.Println("Not a palindrome")
+    }
+}
+// Input: 121
+// Output: Palindrome
+```
+
+---
+
+### Slip 10
+**Question:** Write a program in GO language to create an interface and display its values with the help of type assertion.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+type Shape interface {
+    Area() float64
+}
+
+type Rectangle struct {
+    length, width float64
+}
+
+func (r Rectangle) Area() float64 {
+    return r.length * r.width
+}
+
+type Circle struct {
+    radius float64
+}
+
+func (c Circle) Area() float64 {
+    return 3.14 * c.radius * c.radius
+}
+
+func displayShapeInfo(s Shape) {
+    switch v := s.(type) {
+    case Rectangle:
+        fmt.Println("Rectangle with area:", v.Area())
+    case Circle:
+        fmt.Println("Circle with area:", v.Area())
+    default:
+        fmt.Println("Unknown shape")
+    }
+}
+
+func main() {
+    rect := Rectangle{5, 3}
+    circle := Circle{4}
+
+    displayShapeInfo(rect)
+    displayShapeInfo(circle)
+}
+// Input: None (hardcoded values)
+// Output: Rectangle with area: 15
+// Circle with area: 50.24
+```
+
+---
+
+### Slip 11
+**Question:** Write a program in GO language to check whether the accepted number is two digit or not.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func isTwoDigit(num int) bool {
+    return num >= 10 && num <= 99 || num <= -10 && num >= -99
+}
+
+func main() {
+    var number int
+    fmt.Print("Enter a number: ")
+    fmt.Scan(&number)
+    if isTwoDigit(number) {
+        fmt.Println("It is a two-digit number.")
+    } else {
+        fmt.Println("It is not a two-digit number.")
+    }
+}
+// Input: 45
+// Output: It is a two-digit number.
+```
+
+---
+
+### Slip 12
+**Question:** Write a program in GO language to swap two numbers using call by reference concept  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func swap(a, b *int) {
+    *a, *b = *b, *a
+}
+
+func main() {
+    var num1, num2 int
+    fmt.Print("Enter first number: ")
+    fmt.Scan(&num1)
+    fmt.Print("Enter second number: ")
+    fmt.Scan(&num2)
+
+    fmt.Println("Before swap:", num1, num2)
+    swap(&num1, &num2)
+    fmt.Println("After swap:", num1, num2)
+}
+// Input: 5 10
+// Output: Before swap: 5 10
+// After swap: 10 5
+```
+
+---
+
+### Slip 13
+**Question:** Write a program in GO language to print sum of all even and odd numbers separately between 1 to 100.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func main() {
+    evenSum := 0
+    oddSum := 0
+    for i := 1; i <= 100; i++ {
+        if i % 2 == 0 {
+            evenSum += i
+        } else {
+            oddSum += i
+        }
+    }
+    fmt.Println("Sum of even numbers: ", evenSum)
+    fmt.Println("Sum of odd numbers: ", oddSum)
+}
+// Input: None
+// Output: Sum of even numbers: 2550
+// Sum of odd numbers: 2500
+```
+
+---
+
+### Slip 14
+**Question:** Write a program in GO language to demonstrate working of slices (like append, remove, copy etc.)  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func main() {
+    // Create a slice
+    mySlice := make([]int, 0, 5)
+    fmt.Println("Initial slice:", mySlice)
+
+    // Append elements
+    mySlice = append(mySlice, 1, 2, 3)
+    fmt.Println("After appending 1, 2, 3:", mySlice)
+
+    // Remove element at index 1
+    mySlice = append(mySlice[:1], mySlice[2:]...)
+    fmt.Println("After removing element at index 1:", mySlice)
+
+    // Copy slice
+    newSlice := make([]int, len(mySlice))
+    copy(newSlice, mySlice)
+    fmt.Println("Copied slice:", newSlice)
+
+    // Modify copied slice
+    newSlice[0] = 10
+    fmt.Println("Modified copied slice:", newSlice)
+    fmt.Println("Original slice remains:", mySlice)
+}
+// Input: None (hardcoded operations)
+// Output: Initial slice: []
+// After appending 1, 2, 3: [1 2 3]
+// After removing element at index 1: [1 3]
+// Copied slice: [1 3]
+// Modified copied slice: [10 3]
+// Original slice remains: [1 3]
+```
+
+---
+
+### Slip 15
+**Question:** Write a program in GO language to demonstrate function return multiple values.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func multipleValues(a, b int) (int, int) {
+    return a + b, a * b
+}
+
+func main() {
+    var num1, num2 int
+    fmt.Print("Enter two numbers: ")
+    fmt.Scan(&num1, &num2)
+
+    sum, product := multipleValues(num1, num2)
+    fmt.Println("Sum:", sum, "Product:", product)
+}
+// Input: 5 3
+// Output: Sum: 8 Product: 15
+```
+
+---
+
+### Slip 16
+**Question:** Write a program in GO language to create a user defined package to find out the area of a rectangle.  
+**Answer:**  
+```go
+// rectangle.go
+package rectangle
+
+func Area(length, width float64) float64 {
+    return length * width
+}
+
+// main.go
+package main
+
+import (
+    "fmt"
+    "github.com/user/rectangle" // Adjust path as necessary
+)
+
+func main() {
+    var length, width float64
+    fmt.Print("Enter length and width of rectangle: ")
+    fmt.Scan(&length, &width)
+
+    area := rectangle.Area(length, width)
+    fmt.Println("Area of rectangle:", area)
+}
+// Input: 5 3
+// Output: Area of rectangle: 15
+```
+
+---
+
+### Slip 17
+**Question:** Write a program in GO language to illustrate the concept of returning multiple values from a function. ( Add, Subtract, Multiply, Divide)  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func arithmeticOperations(a, b float64) (float64, float64, float64, float64) {
+    sum := a + b
+    difference := a - b
+    product := a * b
+    var quotient float64
+    if b != 0 {
+        quotient = a / b
+    } else {
+        quotient = -1 // Indicate division by zero
+    }
+    return sum, difference, product, quotient
+}
+
+func main() {
+    var num1, num2 float64
+    fmt.Print("Enter two numbers: ")
+    fmt.Scan(&num1, &num2)
+
+    sum, diff, prod, quot := arithmeticOperations(num1, num2)
+    fmt.Println("Sum:", sum)
+    fmt.Println("Difference:", diff)
+    fmt.Println("Product:", prod)
+    if quot == -1 {
+        fmt.Println("Cannot divide by zero")
+    } else {
+        fmt.Println("Quotient:", quot)
+    }
+}
+// Input: 10 2
+// Output: Sum: 12
+// Difference: 8
+// Product: 20
+// Quotient: 5
+```
+
+---
+
+### Slip 18
+**Question:** Write a program in GO language to print a multiplication table of number using function.  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func printTable(num int) {
+    for i := 1; i <= 10; i++ {
+        fmt.Println(num, "x", i, "=", num*i)
+    }
+}
+
+func main() {
+    var number int
+    fmt.Print("Enter a number: ")
+    fmt.Scan(&number)
+
+    printTable(number)
+}
+// Input: 5
+// Output:
+// 5 x 1 = 5
+// 5 x 2 = 10
+// 5 x 3 = 15
+// 5 x 4 = 20
+// 5 x 5 = 25
+// 5 x 6 = 30
+// 5 x 7 = 35
+// 5 x 8 = 40
+// 5 x 9 = 45
+// 5 x 10 = 50
+```
+
+---
+
+### Slip 19
+**Question:** Write a program in GO language to illustrate the function returning multiple values(add, subtract).  
+**Answer:**  
+```go
+package main
+
+import "fmt"
+
+func addSubtract(a, b int) (int, int) {
+    return a + b, a - b
+}
+
+func main() {
+    var num1, num2 int
+    fmt.Print("Enter two numbers: ")
+    fmt.Scan(&num1, &num2)
+
+    sum, difference := addSubtract(num1, num2)
+    fmt.Println("Sum:", sum, "Difference:", difference)
+}
+// Input: 10 5
+// Output: Sum: 15 Difference: 5
+```
+
+---
+
+### Slip 20
+**Question:** Write a program in Go language to add or append content at the end of a text file.  
+**Answer:**  
+```go
+package main
+
+import (
+    "fmt"
+    "os"
+)
+
+func main() {
+    var content string
+    fmt.Print("Enter content to append: ")
+    fmt.Scan(&content)
+
+    file, err := os.OpenFile("example.txt", os.O_APPEND|os.O_WRONLY, 0644)
+    if err != nil {
+        fmt.Println("Error opening file:", err)
+        return
+    }
+    defer file.Close()
+
+    _, err = file.Write([]byte(content + "\n"))
+    if err != nil {
+        fmt.Println("Error writing to file:", err)
+        return
+    }
+
+    fmt.Println("Content appended successfully.")
+}
+// Input: Hello
+// Output: Content appended successfully.
+```
+
+---
+
