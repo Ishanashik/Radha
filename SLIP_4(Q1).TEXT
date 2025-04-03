@@ -1,213 +1,120 @@
-Q1. Create a Simple Application, that performs Arithmetic Operations. (Use constraint layout) 
+##WAP in python/C++ language to blink LED.
 
-Step 2: Modify activity_main.xml with ConstraintLayout
+Observations on Input:
+In my experiment, I set up an Arduino Uno on Tinkercad with an external LED. The LED's anode (+) was connected to pin 13 through a resistor, and its cathode (-) was connected to ground. The Arduino was powered via a USB cable, and no sensors or additional inputs were used.
 
+Observations on Output:
+The external LED connected to pin 13 blinked on for 1 second and off for 1 second. This occurred because my code toggled pin 13 between HIGH and LOW with 1000-millisecond delays in between. The built-in LED on the Arduino also blinked in sync since it is internally wired to pin 13.
 
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="16dp"
-    tools:context=".MainActivity">
+Result:
+The Arduino executed the program correctly, causing the external LED (along with the built-in LED) to blink at 1-second intervals. The circuit functioned as expected in the simulation.
 
-    <!-- Label for First Number -->
-
-    <!-- First Number Input -->
-    <TextView
-        android:id="@+id/tvLabel1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="232dp"
-        android:text="Enter No 1:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/etNum1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Number 1"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toTopOf="@id/tvLabel1"
-        app:layout_constraintStart_toEndOf="@id/tvLabel1"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="8dp" />
-
-    <!-- Label for Second Number -->
-    <TextView
-        android:id="@+id/tvLabel2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enter No 2:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toBottomOf="@id/tvLabel1"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="16dp" />
-
-    <!-- Second Number Input -->
-    <EditText
-        android:id="@+id/etNum2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Number 2"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toTopOf="@id/tvLabel2"
-        app:layout_constraintStart_toEndOf="@id/tvLabel2"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="8dp" />
-
-    <!-- Result Display -->
-    <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Result: "
-        android:textSize="35sp"
-        android:textStyle="italic"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/etNum2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
-
-    <!-- Buttons -->
-    <Button
-        android:id="@+id/btnAdd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="Addition"
-        android:text="Add"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toBottomOf="@id/tvResult"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnSub"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        android:layout_marginTop="16dp" />
-
-    <Button
-        android:id="@+id/btnSub"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="Subtraction"
-        android:text="Sub"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toTopOf="@id/btnAdd"
-        app:layout_constraintStart_toEndOf="@id/btnAdd"
-        app:layout_constraintEnd_toStartOf="@id/btnMul" />
-
-    <Button
-        android:id="@+id/btnMul"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="Multiplication"
-        android:text="Mul"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toTopOf="@id/btnAdd"
-        app:layout_constraintStart_toEndOf="@id/btnSub"
-        app:layout_constraintEnd_toStartOf="@id/btnDiv" />
-
-    <Button
-        android:id="@+id/btnDiv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="Division"
-        android:text="Div"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintTop_toTopOf="@id/btnAdd"
-        app:layout_constraintStart_toEndOf="@id/btnMul"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-## MainActivity.java
-
-package com.example.calcy;
+Conclusion:
+This experiment confirmed that the Arduino can control an external LED using digital signals and timing. The LED was properly connected with a resistor for current limiting, and the blinking behavior was achieved using the digitalWrite() and delay() functions. Adding a sensor in future experiments could make the setup more interactive.
 
 
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    TextView tvResult;
-    EditText etNum1,etNum2;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        tvResult = findViewById(R.id.tvResult);
-        etNum1 = findViewById(R.id.etNum1);
-        etNum2 = findViewById(R.id.etNum2);
-    }
 
-    public void Addition(View v){
-        float n1,n2,result;
 
-        n1 = Float.parseFloat(etNum1.getText().toString());
-        n2 = Float.parseFloat(etNum2.getText().toString());
 
-        result = n1 + n2;
 
-        tvResult.setText(String.format("Addition: %s", result));
-    }
-    public void Subtraction(View v){
-        float n1,n2,result;
 
-        n1 = Float.parseFloat(etNum1.getText().toString());
-        n2 = Float.parseFloat(etNum2.getText().toString());
+##WAP in python/C++ language to toggle two LED’s
 
-        result = n1 - n2;
+// Define LED pins
+const int LED1 =13 ;  // First LED connected to pin 9
+const int LED2 = 12; // Second LED connected to pin 10
 
-        tvResult.setText(String.format("Subtraction: %s", result));
-    }
-    public void Multiplication(View v){
-        float n1,n2,result;
+void setup() {
+    pinMode(LED1, OUTPUT);  // Set pin 9 as output
+    pinMode(LED2, OUTPUT);  // Set pin 10 as output
+}
 
-        n1 = Float.parseFloat(etNum1.getText().toString());
-        n2 = Float.parseFloat(etNum2.getText().toString());
+void loop() {
+    digitalWrite(LED1, HIGH);  // Turn LED1 ON
+    digitalWrite(LED2, LOW);   // Turn LED2 OFF
+    delay(1000);               // Wait 1 second
 
-        result = n1 * n2;
+    digitalWrite(LED1, LOW);   // Turn LED1 OFF
+    digitalWrite(LED2, HIGH);  // Turn LED2 ON
+    delay(1000);               // Wait 1 second
+}
 
-        tvResult.setText(String.format("Multiplication: %s", result));
-    }
-    public void Division(View v){
-        float n1,n2,result;
+---
 
-        n1 = Float.parseFloat(etNum1.getText().toString());
-        n2 = Float.parseFloat(etNum2.getText().toString());
+### **Observations on Input:**  
+In my experiment, I set up an **Arduino Uno on Tinkercad** with **two external LEDs**.  
+- The **first LED (LED1)** was connected to **pin 13** through a **resistor**, and its **cathode (-)** was connected to **GND**.  
+- The **second LED (LED2)** was connected to **pin 12** in a similar manner.  
+- The Arduino was powered via a **USB cable**, and no sensors or additional inputs were used.  
 
-        result = n1 / n2;
+---
 
-        tvResult.setText(String.format("Division: %s", result));
-    }
+### **Observations on Output:**  
+- The **first LED (LED1) on pin 13 turned ON while the second LED (LED2) on pin 12 remained OFF** for 1 second.  
+- After 1 second, **LED1 turned OFF, and LED2 turned ON**, toggling their states.  
+- This blinking pattern **continued at 1-second intervals**, matching the delay() function in the code.  
+- The **built-in LED on the Arduino Uno** (which is internally connected to **pin 13**) also blinked **in sync with LED1**.  
+
+---
+
+### **Result:**  
+The Arduino executed the program **correctly**, causing **LED1 and LED2 to toggle alternately every second**. The circuit functioned as expected in the **Tinkercad simulation**, proving that the code effectively controlled two external LEDs using **digitalWrite()** and **delay()** functions.
+
+---
+
+### **Conclusion:**  
+This experiment confirmed that **Arduino can toggle multiple LEDs using digital signals**. The use of **resistors** ensured **current limiting**, preventing damage to the LEDs. **Adding sensors** or **push buttons** in future experiments could make the circuit more interactive and dynamic.
+
+
+
+
+
+
+
+###WAP in python/C++ language to turn ON/OFF buzzer.
+
+#define BUZZER 8  // Buzzer connected to pin 9
+
+void setup() {
+    pinMode(BUZZER, OUTPUT);  // Set buzzer pin as output
+}
+
+void loop() {
+    digitalWrite(BUZZER, HIGH);  // Turn ON buzzer
+    delay(1000);                 // Wait 1 second
+    digitalWrite(BUZZER, LOW);   // Turn OFF buzzer
+    delay(1000);                 // Wait 1 second
 }
 
 
 
+##Observations on Input:
+In my experiment, I set up an Arduino Uno on Tinkercad with a buzzer connected to pin 8.
 
+A resistor was placed in series with the buzzer to limit current.
 
+The Arduino was powered via a USB cable, and no additional input components like sensors or buttons were used.
 
+##Observations on Output:
+The buzzer turned ON (producing a beep sound) for 1 second when the program executed digitalWrite(BUZZER, HIGH);.
 
+After 1 second, the buzzer turned OFF when the program executed digitalWrite(BUZZER, LOW);.
 
+This ON-OFF pattern continued at 1-second intervals, following the delay(1000); function in the code.
 
+##Result:
+The Arduino executed the program correctly, turning the buzzer ON and OFF at 1-second intervals.
 
+The circuit functioned as expected in the Tinkercad simulation, proving that the code effectively controlled the buzzer using digitalWrite() and delay() functions.
 
+##Conclusion:
+This experiment confirmed that an Arduino can control a buzzer using digital signals.
 
+The resistor helped limit the current, ensuring the buzzer operated safely.
 
-
-
-
-
-
-
+Adding sensors or push buttons in future experiments could make the circuit more interactive (e.g., a buzzer that turns ON only when a button is pressed).
 
